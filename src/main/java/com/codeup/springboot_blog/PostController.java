@@ -1,20 +1,31 @@
 package com.codeup.springboot_blog;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class PostController {
 @GetMapping("/posts")
-@ResponseBody
-public String index() {
-    return "Posts an index page.";
+    public String index(Model model) {
+    List<Post> posts = new ArrayList<>();
+    for (int i = 1; i<5; i++) {
+        posts.add(new Post(i, "Here's a title for this one", "Here's a bunch of text for it"
+
+        ));
+        model.addAttribute("posts", posts);
+    }
+    return "posts/index";
 }
 
 @GetMapping("posts/{id}")
-    @ResponseBody
-    public String individualPost(@PathVariable int id) {
-    return "This will show an individual post";
+    public String individualPost(@PathVariable int id, Model model) {
+    Post post = new Post(id, "Here's a title for this detailed view", "Here's a bunch of text for it as well!");
+    model.addAttribute("post", post);
+    return "posts/show";
 }
 
 @GetMapping("/posts/create")

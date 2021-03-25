@@ -1,10 +1,14 @@
 package com.codeup.springboot_blog;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import static java.lang.Math.abs;
 
 @Controller
 public class MathControlloer {
@@ -31,4 +35,37 @@ public class MathControlloer {
     public int divide(@PathVariable int number1, @PathVariable int number2) {
         return number1 / number2;
     }
+
+    @GetMapping("/roll-dice")
+    public String displayRollDice() {
+        return "dice";
+    }
+
+    @GetMapping("/roll-dice/{guess}")
+    public String guessingGame(@PathVariable int guess, Model model) {
+
+        List<Integer> actuals = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            Random random = new Random();
+            actuals.add(random.nextInt(5)+1);
+        }
+        model.addAttribute("actuals", actuals);
+        model.addAttribute("guess", guess);
+//        model.addAttribute("guess", "You guessed " + guess + "; the actual number was: " + actual);
+//        if (guess == actual) {
+//            model.addAttribute("message", "Good job! You got it exactly right!");
+//        } else {
+//            model.addAttribute("message", "Oh well, you were only off by " + abs(actual - guess));
+//        }
+        return "dice";
+    }
+
+    @PostMapping("/roll-dice")
+    public String guessingGamePost(@RequestParam(name = "guess") int guess) {
+
+        Random random = new Random();
+        int actual = random.nextInt(5) + 1;
+        return "dice";
+    }
+
 }
