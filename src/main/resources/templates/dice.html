@@ -17,9 +17,13 @@
 <a href="/roll-dice/5">Number 5</a>
 <a href="/roll-dice/6">Number 6</a>
 
-<div class="" th:if ="${guess != null}">
-    <span th:each="actual : ${actuals}"><p>The actual roll was <span th:text="${actual}"></span>, you guessed <span th:text="${guess}"></span> </p></span>
-<!--    <p><span th:text="${message}"></span> </p>-->
+<!--<div class="" th:if ="${guess != null}">-->
+<!--    <span th:each="actual : ${actuals}"><p>The actual roll was <span th:text="${actual}"></span>, you guessed <span th:text="${guess}"></span></span></p>-->
+<!--</div>-->
+
+<div class="" th:if="${hash != null}">
+    <p>You guessed right <span th:text="${count}"></span> times!</p>
+    <div th:each="set : ${hash}"><p>You guessed <span th:text="${guess}"></span> - the actual dive roll was <span th:text="${set.key}"></span> <span th:if="${set.value}">You were right!</span> </p></div>
 </div>
 
 </body>
