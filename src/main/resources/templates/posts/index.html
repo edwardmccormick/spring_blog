@@ -13,9 +13,10 @@
 
 <div th:each="post,iterStat : ${posts}" th:class="${iterStat.count}" class="text-center">
 
-    <h2><span th:text="${post.title}"></span></h2>
+    <h2><span th:text="${post.title}"></span> - <span th:text="${post.id}"></span> </h2>
     <div class="text-start"><p th:text="${post.getBody()}"></p></div>
 </div>
 </div>
+    <footer th:replace="partials.html::footer"></footer>
 </body>
 </html>

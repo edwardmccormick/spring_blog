@@ -9,29 +9,37 @@ import java.util.List;
 
 @Controller
 public class PostController {
+    private final PostRepository postDao;
+
+    public PostController(PostRepository postDao){
+        this.postDao = postDao;
+    }
+
 @GetMapping("/posts")
     public String index(Model model) {
-    List<Post> posts = new ArrayList<>();
-    for (int i = 1; i<5; i++) {
-        posts.add(new Post(i, "Here's a title for this one", "Here's a bunch of text for it"
-
-        ));
-        model.addAttribute("posts", posts);
-    }
+//    List<Post> posts = new ArrayList<>();
+//    for (int i = 1; i<5; i++) {
+//        posts.add(new Post(i, "Here's a title for this one", "Here's a bunch of text for it"
+//
+//        ));
+//        model.addAttribute("posts", posts);
+//    }
+    model.addAttribute("posts", postDao.findAll());
     return "posts/index";
 }
 
 @GetMapping("posts/{id}")
-    public String individualPost(@PathVariable int id, Model model) {
-    Post post = new Post(id, "Here's a title for this detailed view", "Here's a bunch of text for it as well!");
-    model.addAttribute("post", post);
+    public String individualPost(@PathVariable long id, Model model) {
+//    Post post = new Post(id, "Here's a title for this detailed view", "Here's a bunch of text for it as well!");
+//    model.addAttribute("post", post);
+//    model.addAttribute("post", postDao.findAllById(id);
+    model.addAttribute("post", postDao.getOne(id));
     return "posts/show";
 }
 
 @GetMapping("/posts/create")
-    @ResponseBody
-    public String createNew() {
-    return "This will show the form to create a new post";
+    public String createNew(Model model) {
+        return "posts/create";
 }
 
 @PostMapping("/posts/create")

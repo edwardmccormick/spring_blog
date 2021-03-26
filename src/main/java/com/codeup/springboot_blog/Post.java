@@ -1,11 +1,34 @@
 package com.codeup.springboot_blog;
 
+import com.mysql.cj.protocol.ColumnDefinition;
+
+import javax.persistence.*;
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+@Entity
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column (nullable = false, length = 255)
     private String title;
+
+    @Column (columnDefinition = "TEXT", nullable = false)
     private String body;
-    private String created_on;
-    private String modified_on;
+
+//    @Column (columnDefinition="created_time datetime default CURRENT_TIMESTAMP null")
+//    @Column
+    private Date created_on;
+//
+////    @Column (columnDefinition = "modified_time datetime default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP")
+    private Date modified_on;
+//
+//    private SimpleDateFormat sdf = new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
+
+    public Post(){};
 
     public Post(long id, String title, String body) {
         this.id = id;
@@ -13,13 +36,14 @@ public class Post {
         this.body = body;
     }
 
-    public Post(long id, String title, String body, String created_on, String modified_on) {
+    public Post(long id, String title, String body, Date created_on, Date modified_on) {
         this.id = id;
         this.title = title;
         this.body = body;
         this.created_on = created_on;
         this.modified_on = modified_on;
     }
+
 
     public long getId() {
         return id;
@@ -45,19 +69,25 @@ public class Post {
         this.body = body;
     }
 
-    public String getCreated_on() {
+    public Date getCreated_on() {
         return created_on;
     }
 
-    public void setCreated_on(String created_on) {
+    public void setCreated_on(Date created_on) {
         this.created_on = created_on;
     }
 
-    public String getModified_on() {
+    public Date getModified_on() {
         return modified_on;
     }
 
-    public void setModified_on(String modified_on) {
+    public void setModified_on(Date modified_on) {
         this.modified_on = modified_on;
     }
+
+//    public SimpleDateFormat getSdf() {
+//        return sdf;
+//    }
+
+
 }

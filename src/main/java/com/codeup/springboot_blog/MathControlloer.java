@@ -4,7 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -45,12 +47,20 @@ public class MathControlloer {
     public String guessingGame(@PathVariable int guess, Model model) {
 
         List<Integer> actuals = new ArrayList<>();
+        List<Boolean> corrects = new ArrayList<>();
+        HashMap<Integer, Boolean> hash = new HashMap<>();
+        int count = 0;
         for (int i = 0; i < 6; i++) {
             Random random = new Random();
-            actuals.add(random.nextInt(5)+1);
+            int actual = random.nextInt(5)+1;
+            hash.put(actual,actual == guess);
+            if (actual == guess) {count++;}
         }
         model.addAttribute("actuals", actuals);
         model.addAttribute("guess", guess);
+        model.addAttribute("hash", hash);
+        model.addAttribute("corrects", corrects);
+        model.addAttribute("count", count);
 //        model.addAttribute("guess", "You guessed " + guess + "; the actual number was: " + actual);
 //        if (guess == actual) {
 //            model.addAttribute("message", "Good job! You got it exactly right!");

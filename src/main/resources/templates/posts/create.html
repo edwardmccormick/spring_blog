@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:include="partials.html::head" >
+    <meta charset="UTF-8">
+    <title>Create a new Blog Post!</title>
+</head>
+<body>
+<div th:replace="partials.html::navbar">You shouldn't see this.</div>
+
+<div class="container">
+    <h1>Use the form below to create a new post!</h1>
+    <form action="/posts/create" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title of the post</label>
+            <input id="title" class="form-control" name="title" type="text">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Body of the blog post</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6">All text goes here. At this time no formatting is allowed besides line breaks.</textarea>
+        </div>
+            <button class="btn btn-secondary text-center">Submit Post</button>
+    </form>
+</div>
+<footer th:replace="partials.html::footer"></footer>
+</body>
+</html>
