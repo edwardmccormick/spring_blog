@@ -52,8 +52,30 @@ public class PostController {
 
 @GetMapping("/posts/create")
     public String createRender(Model model) {
-        return "posts/create";
+    return "posts/create";
 }
+
+@PostMapping("/posts/create")
+    public String createToDatabase(Model model) {
+    model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
+            "  The post was added successfully.</div>");
+    return "redirect:/posts";
 }
 
 
+@GetMapping("/edit/{id}")
+    public String editIndividualPost ( @PathVariable long id, Model model){
+    model.addAttribute("post", postDao.getOne(id));
+    return "posts/edit";
+    }
+
+@PostMapping("/edit")
+    public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
+                                         @RequestParam(name = "body") String body, Model model) {
+//    postDao.
+        model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
+            "  The post was successfully updated. </div>");
+        return "redirect:/posts";
+}
+
+}
