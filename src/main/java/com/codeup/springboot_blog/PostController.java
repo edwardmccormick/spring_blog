@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -24,7 +26,9 @@ public class PostController {
 //        ));
 //        model.addAttribute("posts", posts);
 //    }
-    model.addAttribute("posts", postDao.findAll());
+    List<Post> posts = postDao.findAll();
+    Collections.reverse(posts);
+    model.addAttribute("posts", posts);
     return "posts/index";
 }
 
@@ -37,15 +41,19 @@ public class PostController {
     return "posts/show";
 }
 
+@PostMapping("posts/delete")
+    public String deleteIndividualPost(@RequestParam(name = "id") long id, Model model) {
+    postDao.deleteById(id);
+    System.out.println("id = " + id);
+    model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
+            "  The post was successfully deleted. </div>");
+    return "redirect:/posts";
+    }
+
 @GetMapping("/posts/create")
-    public String createNew(Model model) {
+    public String createRender(Model model) {
         return "posts/create";
 }
-
-@PostMapping("/posts/create")
-    @ResponseBody
-    public String create() {
-    return "This will create the new post.";
 }
 
-}
+

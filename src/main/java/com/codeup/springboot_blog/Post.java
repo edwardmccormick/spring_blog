@@ -22,13 +22,17 @@ public class Post {
 //    @Column (columnDefinition="created_time datetime default CURRENT_TIMESTAMP null")
 //    @Column
     private Date created_on;
+    private String created_on_string;
 //
 ////    @Column (columnDefinition = "modified_time datetime default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP")
     private Date modified_on;
+    private String modified_on_string;
 //
-//    private SimpleDateFormat sdf = new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
+    private SimpleDateFormat sdf = new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
 
     public Post(){};
+
+
 
     public Post(long id, String title, String body) {
         this.id = id;
@@ -41,7 +45,9 @@ public class Post {
         this.title = title;
         this.body = body;
         this.created_on = created_on;
+        this.created_on_string = sdf.format(created_on);
         this.modified_on = modified_on;
+        this.modified_on_string = sdf.format(modified_on);
     }
 
 
@@ -75,6 +81,7 @@ public class Post {
 
     public void setCreated_on(Date created_on) {
         this.created_on = created_on;
+        this.created_on_string = sdf.format(created_on);
     }
 
     public Date getModified_on() {
@@ -83,7 +90,19 @@ public class Post {
 
     public void setModified_on(Date modified_on) {
         this.modified_on = modified_on;
+        this.modified_on_string = sdf.format(modified_on);
     }
+
+    public String getCreated_on_string() {
+        return created_on_string;
+    }
+
+
+    public String getModified_on_string() {
+        return modified_on_string;
+    }
+
+
 
 //    public SimpleDateFormat getSdf() {
 //        return sdf;
