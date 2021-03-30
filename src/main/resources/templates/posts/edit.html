@@ -10,7 +10,7 @@
 
 <div class="container">
     <h1>Use the form below to edit an existing post!</h1>
-    <form action="/edit" method="post">
+    <form th:action="@{/edit}" th:method="post" th:object="${post}">
         <div class="mb-3">
             <label for="title" class="form-label">Title of the post</label>
             <input id="title" class="form-control" name="title" type="text" th:value="${post.title}">

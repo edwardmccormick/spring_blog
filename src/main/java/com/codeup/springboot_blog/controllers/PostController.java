@@ -58,14 +58,16 @@ public class PostController {
 
 @GetMapping("/posts/create")
     public String createRender(Model model) {
+        model.addAttribute("post", new Post());
     return "posts/create";
 }
 
 @PostMapping("/posts/create")
-    public String createToDatabase(@RequestParam("title") String title, @RequestParam("body") String body, Model model) {
+//    public String createToDatabase(@RequestParam("title") String title, @RequestParam("body") String body, Model model) {
+    public String createToDatabase(@ModelAttribute Post post, Model model) {
     User author = userDao.getOne(1L);
-    Post postToAdd = new Post(title, body, author);
-    postDao.save(postToAdd);
+    post.setAuthor(author);
+    postDao.save(post);
     model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
             "  The post was added successfully.</div>");
     return "redirect:/posts";
@@ -73,16 +75,17 @@ public class PostController {
 
 
 @GetMapping("/edit/{id}")
-    public String editIndividualPost ( @PathVariable long id, Model model){
+    public String editIndividualPost (@PathVariable long id, Model model){
     model.addAttribute("post", postDao.getOne(id));
     return "posts/edit";
     }
 
 @PostMapping("/edit")
-    public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
-                                         @RequestParam(name = "body") String body, Model model) {
+//    public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
+//                                         @RequestParam(name = "body") String body, Model model) {
+public String editSaveIndividualPost(@ModelAttribute Post post, Model model) {
         User author = userDao.getOne(1L);
-        Post post = new Post(id, title, body, author);
+        post.setAuthor(author);
         postDao.save(post);
         model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
             "  The post was successfully updated. </div>");

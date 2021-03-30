@@ -27,7 +27,8 @@ public class Post {
         this.author = author;
     }
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn (name = "author_id")
     private User author;
 
 //    @Column (columnDefinition="created_time datetime default CURRENT_TIMESTAMP null")

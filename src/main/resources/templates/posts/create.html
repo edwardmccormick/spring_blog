@@ -10,14 +10,14 @@
 
 <div class="container">
     <h1>Use the form below to create a new post!</h1>
-    <form action="/posts/create" method="post">
+    <form th:action="@{/posts/create}" th:method="post" th:object="${post}">
         <div class="mb-3">
             <label for="title" class="form-label">Title of the post</label>
-            <input id="title" class="form-control" name="title" type="text">
+            <input id="title" class="form-control" th:field="${post.title}" type="text">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Body of the blog post</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" name="body">All text goes here. At this time no formatting is allowed besides line breaks.</textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" th:field="${post.body}">All text goes here. At this time no formatting is allowed besides line breaks.</textarea>
         </div>
             <button class="btn btn-secondary text-center">Submit Post</button>
     </form>

@@ -10,9 +10,27 @@ a {
     color: var(--taupe);
 }
 a:hover {
-    color: var(--lavendar);
+    color: var(--cadetblue);
+}
+
+a:visited {
+    color: var(--quicksilver)
 }
 
 body {
     background-color: var(--white);
+}
+
+.btn {
+    background-color: var(--taupe);
+    outline-color: var(--white) !important;
+}
+
+.btn:hover {
+    background-color: var(--cadetblue);
+    outline-color: var(--taupe) !important;
+}
+
+btn:focus, .btn:active {
+    outline: var(--white) !important;
 }
