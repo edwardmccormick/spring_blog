@@ -1,4 +1,4 @@
-package com.codeup.springboot_blog;
+package com.codeup.springboot_blog.models;
 
 import com.mysql.cj.protocol.ColumnDefinition;
 
@@ -19,36 +19,59 @@ public class Post {
     @Column (columnDefinition = "TEXT", nullable = false)
     private String body;
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    @OneToOne
+    private User author;
+
 //    @Column (columnDefinition="created_time datetime default CURRENT_TIMESTAMP null")
 //    @Column
     private Date created_on;
-    private String created_on_string;
+//    private String created_on_string;
 //
 ////    @Column (columnDefinition = "modified_time datetime default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP")
     private Date modified_on;
-    private String modified_on_string;
-//
-    private SimpleDateFormat sdf = new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
+//    private String modified_on_string;
+////
+//    private SimpleDateFormat sdf = new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss");
 
     public Post(){};
 
 
 
-    public Post(long id, String title, String body) {
+    public Post(long id, String title, String body, User author) {
         this.id = id;
+        this.title = title;
+        this.body = body;
+        this.author = author;
+    }
+
+    public Post(String title, String body, User author) {
+        this.title = title;
+        this.body = body;
+        this.author = author;
+    }
+
+    public Post(String title, String body) {
         this.title = title;
         this.body = body;
     }
 
-    public Post(long id, String title, String body, Date created_on, Date modified_on) {
-        this.id = id;
-        this.title = title;
-        this.body = body;
-        this.created_on = created_on;
-        this.created_on_string = sdf.format(created_on);
-        this.modified_on = modified_on;
-        this.modified_on_string = sdf.format(modified_on);
-    }
+//    public Post(long id, String title, String body, Date created_on, Date modified_on) {
+//        this.id = id;
+//        this.title = title;
+//        this.body = body;
+//        this.created_on = created_on;
+////        this.created_on_string = sdf.format(created_on);
+//        this.modified_on = modified_on;
+////        this.modified_on_string = sdf.format(modified_on);
+//    }
 
 
     public long getId() {
@@ -81,7 +104,7 @@ public class Post {
 
     public void setCreated_on(Date created_on) {
         this.created_on = created_on;
-        this.created_on_string = sdf.format(created_on);
+//        this.created_on_string = sdf.format(created_on);
     }
 
     public Date getModified_on() {
@@ -90,17 +113,17 @@ public class Post {
 
     public void setModified_on(Date modified_on) {
         this.modified_on = modified_on;
-        this.modified_on_string = sdf.format(modified_on);
+//        this.modified_on_string = sdf.format(modified_on);
     }
 
-    public String getCreated_on_string() {
-        return created_on_string;
-    }
-
-
-    public String getModified_on_string() {
-        return modified_on_string;
-    }
+//    public String getCreated_on_string() {
+//        return created_on_string;
+//    }
+//
+//
+//    public String getModified_on_string() {
+//        return modified_on_string;
+//    }
 
 
 

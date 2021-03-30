@@ -1,20 +1,26 @@
-package com.codeup.springboot_blog;
+package com.codeup.springboot_blog.controllers;
 
+import com.codeup.springboot_blog.daos.UserRepository;
+import com.codeup.springboot_blog.models.Post;
+import com.codeup.springboot_blog.daos.PostRepository;
+import com.codeup.springboot_blog.models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 @Controller
 public class PostController {
     private final PostRepository postDao;
+    private final UserRepository userDao;
 
-    public PostController(PostRepository postDao){
+
+    public PostController(PostRepository postDao, UserRepository userDao){
+
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
 @GetMapping("/posts")
@@ -56,7 +62,10 @@ public class PostController {
 }
 
 @PostMapping("/posts/create")
-    public String createToDatabase(Model model) {
+    public String createToDatabase(@RequestParam("title") String title, @RequestParam("body") String body, Model model) {
+    User author = userDao.getOne(1L);
+    Post postToAdd = new Post(title, body, author);
+    postDao.save(postToAdd);
     model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
             "  The post was added successfully.</div>");
     return "redirect:/posts";
@@ -72,10 +81,18 @@ public class PostController {
 @PostMapping("/edit")
     public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
                                          @RequestParam(name = "body") String body, Model model) {
-//    postDao.
+        User author = userDao.getOne(1L);
+        Post post = new Post(id, title, body, author);
+        postDao.save(post);
         model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
             "  The post was successfully updated. </div>");
         return "redirect:/posts";
 }
 
+@GetMapping("/search")
+    public String searchPosts (@RequestParam(name = "search") String terms, Model model) {
+//    model.addAttribute("posts", postDao.findPostByTitleIsContaining(terms));
+    model.addAttribute("posts", postDao.findPostByTitleIsContainingOrBodyContaining(terms, terms));
+    return "posts/index";
+}
 }
