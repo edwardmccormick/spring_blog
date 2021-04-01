@@ -9,7 +9,12 @@
 <div th:replace="partials.html::navbar">You shouldn't see this.</div>
 
 <div class="container">
+    <div th:if="${search != null}">
+        <h1>Here's all titles and posts that contained: "<span th:text="${search}"></span>"</h1>
+    </div>
+    <div th:if="${search == null}">
 <h1>Here's a list of all posts</h1>
+    </div>
 
 <div th:each="post,iterStat : ${posts}" th:class="${iterStat.count}" class="text-center">
 
@@ -17,6 +22,7 @@
     <div class="text-start"><p th:text="${post.getBody()}"></p>
         <p>Posted by: <span th:text="${post.author.username}"></span></p>
 <!--        <p>Posted: <span th:text="${post.created_on_string}"> </span> </div>-->
+</div>
 </div>
 </div>
     <footer th:replace="partials.html::footer"></footer>

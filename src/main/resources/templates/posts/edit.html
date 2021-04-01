@@ -10,15 +10,15 @@
 
 <div class="container">
     <h1>Use the form below to edit an existing post!</h1>
-    <form th:action="@{/edit}" th:method="post" th:object="${post}">
+    <form th:action="@{'/posts/' + ${post.id} + '/edit'}" th:method="post" th:object="${post}">
         <div class="mb-3">
             <label for="title" class="form-label">Title of the post</label>
-            <input id="title" class="form-control" name="title" type="text" th:value="${post.title}">
+            <input class="form-control" type="text" th:field="*{title}">
         </div>
         <div class="mb-3">
-            <label for="bodyinput" class="form-label">Body of the blog post</label>
-            <textarea class="form-control" id="bodyinput" rows="6" name="body" th:field="${post.body}"></textarea>
-            <input hidden id="id" name="id" th:value="${post.id}">
+            <label for="body" class="form-label">Body of the blog post</label>
+            <textarea class="form-control" rows="6" th:field="*{body}"></textarea>
+<!--            <input hidden id="id" name="id" th:value="${post.id}">-->
         </div>
         <button class="btn btn-secondary text-center">Submit Post</button>
     </form>

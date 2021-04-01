@@ -4,6 +4,7 @@ import com.codeup.springboot_blog.daos.UserRepository;
 import com.codeup.springboot_blog.models.Post;
 import com.codeup.springboot_blog.daos.PostRepository;
 import com.codeup.springboot_blog.models.User;
+import com.codeup.springboot_blog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +16,14 @@ import java.util.List;
 public class PostController {
     private final PostRepository postDao;
     private final UserRepository userDao;
+    private final EmailService emailService;
 
 
-    public PostController(PostRepository postDao, UserRepository userDao){
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService){
 
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
 @GetMapping("/posts")
@@ -68,24 +71,26 @@ public class PostController {
     User author = userDao.getOne(1L);
     post.setAuthor(author);
     postDao.save(post);
+    emailService.prepareAndSend(post, "Your post was successfully posted!", "You can view it at http://localhost:8080/posts/" + post.getId());
     model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
             "  The post was added successfully.</div>");
-    return "redirect:/posts";
+    return "redirect:/posts/" + post.getId();
 }
 
 
-@GetMapping("/edit/{id}")
+@GetMapping("/posts/{id}/edit")
     public String editIndividualPost (@PathVariable long id, Model model){
     model.addAttribute("post", postDao.getOne(id));
-    return "posts/edit";
+    return "posts/create";
     }
 
-@PostMapping("/edit")
+@PostMapping("/posts/{id}/edit")
 //    public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
 //                                         @RequestParam(name = "body") String body, Model model) {
-public String editSaveIndividualPost(@ModelAttribute Post post, Model model) {
+public String editSaveIndividualPost(@ModelAttribute Post post, @PathVariable long id, Model model) {
         User author = userDao.getOne(1L);
         post.setAuthor(author);
+        post.setId(id);
         postDao.save(post);
         model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
             "  The post was successfully updated. </div>");
@@ -96,6 +101,7 @@ public String editSaveIndividualPost(@ModelAttribute Post post, Model model) {
     public String searchPosts (@RequestParam(name = "search") String terms, Model model) {
 //    model.addAttribute("posts", postDao.findPostByTitleIsContaining(terms));
     model.addAttribute("posts", postDao.findPostByTitleIsContainingOrBodyContaining(terms, terms));
+    model.addAttribute("search", terms);
     return "posts/index";
 }
 }

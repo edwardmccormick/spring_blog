@@ -14,7 +14,7 @@
 <div class="text-start p-2 m-2"><p th:text="${post.getBody()}">Body will go here.</p>
     <p>Posted by: <a th:href="'mailto:' + ${post.author.email}"><span th:text="${post.author.getUsername()}"></span></a> </p></div>
 <!--    <br><p>Posted: <span th:text="${post.created_on_string}"></span>. Last updated: <span th:text="${post.modified_on_string}"></span> </div>-->
-    <div class="center-text p-2 m-2"><a th:href="@{/edit/__${post.id}__}"><button type="button" class="btn btn-primary">Edit</button></a>
+    <div class="center-text p-2 m-2"><a th:href="@{'/posts/'+ ${post.id} + '/edit'}"><button type="button" class="btn btn-primary">Edit</button></a>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
         Delete
@@ -39,9 +39,9 @@
             </div>
         </div>
     </div>
-
+</div>
 
     <footer th:replace="partials.html::footer"></footer>
-</div>
+
 </body>
 </html>
