@@ -104,4 +104,11 @@ public String editSaveIndividualPost(@ModelAttribute Post post, @PathVariable lo
     model.addAttribute("search", terms);
     return "posts/index";
 }
+
+@GetMapping("/posts/profile/{username}")
+    public String userPosts(@PathVariable String username, Model model) {
+        model.addAttribute("username", username);
+        model.addAttribute("posts", postDao.findPostByAuthor_Username(username));
+        return "posts/index";
+}
 }
