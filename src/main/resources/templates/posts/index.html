@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head th:include="partials.html::head" >
+<head th:include="partials.html::head('All current posts')" >
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <div th:replace="partials.html::navbar">You shouldn't see this.</div>
-
+<main class="flex-shrinkg-0">
 <div class="container">
     <div th:if="${search != null}">
         <h1>Here's all titles and posts that contained: "<span th:text="${search}"></span>"</h1>
     </div>
-    <div th:if="${search == null}">
+    <div th:if="${username != null}"}>
+        <h1>Here's all the posts for username "<span th:text="${username}"></span>"</h1>
+    </div>
+    <div th:if="${search == null && username == null}">
 <h1>Here's a list of all posts</h1>
     </div>
 
@@ -25,6 +28,7 @@
 </div>
 </div>
 </div>
+</main>
     <footer th:replace="partials.html::footer"></footer>
 </body>
 </html>

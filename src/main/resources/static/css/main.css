@@ -21,6 +21,13 @@ body {
     background-color: var(--white);
 }
 
+#footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
 .btn {
     background-color: var(--taupe);
     border-color: var(--white);

@@ -12,6 +12,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 //    @Query(value="SELECT p FROM Post p WHERE p.title LIKE ?1")
     List<Post> findPostByTitleIsContainingOrBodyContaining(String term1, String term2);
     List<Post> findPostByTitleIsContaining(String term);
+    List<Post> findPostByAuthor_Username(String username);
 
 //    Post deletePostById(long id);
 //@Query("from Posts p where p.")
