@@ -9,13 +9,32 @@
 <div th:replace="partials.html::navbar">You shouldn't see this.</div>
 <main class="flex-shrinkg-0">
 <div class="container">
+<div th:if="${user != null}">
+
+    <div class="card col-12 col-sm-8 col-md-6">
+        <img th:src="${user.avatar_path}" class="card-img-top" height="250px" width="250px">
+<!--        th:alt="${user.username}'s Avatar">-->
+        <div class="card-body">
+            <h5 class="card-title"><span th:text="${user.username}"></span></h5>
+            <p class="card-text"><span th:text="${user.bio}"></span></p>
+            <a th:if="${owner}" th:href="@{/profile/__${user.username}__}"><button class="btn btn-primary">Edit Profile</button></a>
+        </div>
+    </div>
+
+</div>
+
     <div th:if="${search != null}">
         <h1>Here's all titles and posts that contained: "<span th:text="${search}"></span>"</h1>
     </div>
-    <div th:if="${username != null}"}>
-        <h1>Here's all the posts for username "<span th:text="${username}"></span>"</h1>
+    <div th:if="${user != null}"}>
+        <h1>Here's all the posts for username "<span th:text="${user.username}"></span>"</h1>
     </div>
-    <div th:if="${search == null && username == null}">
+
+    <div th:if="${user == null && username != null}"}>
+        <h1>No posts by user with a username "<span th:text="${username}"></span>"</h1>
+    </div>
+
+    <div th:if="${search == null && user == null}">
 <h1>Here's a list of all posts</h1>
     </div>
 

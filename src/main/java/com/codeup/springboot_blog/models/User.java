@@ -18,6 +18,12 @@ public class User {
     @Column
     private String password;
 
+    @Column (columnDefinition = "TEXT")
+    private String bio;
+
+    @Column
+    private String avatar_path;
+
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "author")
     private List<Post> posts;
 
@@ -26,6 +32,8 @@ public class User {
         email = copy.email;
         username = copy.username;
         password = copy.password;
+        bio = copy.bio;
+        avatar_path = copy.avatar_path;
     }
 
     public User() {};
@@ -41,6 +49,16 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.posts = posts;
+    }
+
+    public User(long id, String username, String email, String password, String bio, String avatar_path, List<Post> posts) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.bio = bio;
+        this.avatar_path = avatar_path;
         this.posts = posts;
     }
 
@@ -74,5 +92,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getAvatar_path() {
+        return avatar_path;
+    }
+
+    public void setAvatar_path(String avatar_path) {
+        this.avatar_path = avatar_path;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

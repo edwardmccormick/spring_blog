@@ -2,11 +2,13 @@ package com.codeup.springboot_blog.controllers;
 
 import com.codeup.springboot_blog.daos.UserRepository;
 import com.codeup.springboot_blog.models.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -31,5 +33,18 @@ public class UserController {
         user.setPassword(hash);
         userDao.save(user);
         return "redirect:/login";
+    }
+
+    @GetMapping("/profile/{username}/edit")
+    public String profileEditRender(@PathVariable String username, Model model) {
+        User loggedin = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.findByUsername(loggedin.getUsername()));
+        return "users/edit";
+    }
+
+    @PostMapping("profile/{username}/edit")
+    public String profileEditSave(@ModelAttribute User user, @PathVariable String username, Model model) {
+        userDao.save(user);
+        return "redirect:/user/" + user.getUsername();
     }
 }

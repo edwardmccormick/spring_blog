@@ -5,6 +5,7 @@ import com.codeup.springboot_blog.models.Post;
 import com.codeup.springboot_blog.daos.PostRepository;
 import com.codeup.springboot_blog.models.User;
 import com.codeup.springboot_blog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +47,13 @@ public class PostController {
 //    Post post = new Post(id, "Here's a title for this detailed view", "Here's a bunch of text for it as well!");
 //    model.addAttribute("post", post);
 //    model.addAttribute("post", postDao.findAllById(id);
-    model.addAttribute("post", postDao.getOne(id));
+    Post post = postDao.getOne(id);
+    model.addAttribute("post", post);
+    if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {User loggedin = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (loggedin.getId() == post.getAuthor().getId()) {
+        model.addAttribute("owner", true);
+    }}
+
     return "posts/show";
 }
 
@@ -68,7 +75,7 @@ public class PostController {
 @PostMapping("/posts/create")
 //    public String createToDatabase(@RequestParam("title") String title, @RequestParam("body") String body, Model model) {
     public String createToDatabase(@ModelAttribute Post post, Model model) {
-    User author = userDao.getOne(1L);
+    User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     post.setAuthor(author);
     postDao.save(post);
     emailService.prepareAndSend(post, "Your post was successfully posted!", "You can view it at http://localhost:8080/posts/" + post.getId());
@@ -88,7 +95,7 @@ public class PostController {
 //    public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
 //                                         @RequestParam(name = "body") String body, Model model) {
 public String editSaveIndividualPost(@ModelAttribute Post post, @PathVariable long id, Model model) {
-        User author = userDao.getOne(1L);
+        User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setAuthor(author);
         post.setId(id);
         postDao.save(post);
@@ -105,10 +112,24 @@ public String editSaveIndividualPost(@ModelAttribute Post post, @PathVariable lo
     return "posts/index";
 }
 
-@GetMapping("/posts/profile/{username}")
+@GetMapping("/profile/{username}")
     public String userPosts(@PathVariable String username, Model model) {
+    User loggedin = new User();
+    if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+        loggedin = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+        List <Post> posts = postDao.findPostByAuthor_Username(username);
+        model.addAttribute("user", userDao.findByUsername(username));
+        model.addAttribute("posts", posts);
         model.addAttribute("username", username);
-        model.addAttribute("posts", postDao.findPostByAuthor_Username(username));
+        if (username.equalsIgnoreCase(loggedin.getUsername())) {
+            model.addAttribute("owner", true);
+        }
+        if (posts.isEmpty()) {
+            model.addAttribute("posts", postDao.findAll());
+        }
         return "posts/index";
 }
+
+
 }
