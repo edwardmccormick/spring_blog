@@ -24,13 +24,21 @@ public class UserController {
     @GetMapping("/sign-up")
     public String showSignupForm(Model model){
         model.addAttribute("user", new User());
+        User user = new User();
+        System.out.println("user.getUsername() = " + user.getUsername());
         return "users/sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String saveUser(@ModelAttribute User user){
+    public String saveUser(@ModelAttribute User user, Model model){
         String hash = passwordEncoder.encode(user.getPassword());
         user.setPassword(hash);
+//        if (userDao.findByUsername(user.getUsername()) != null) {
+//            model.addAttribute("alert", "<div class=\"alert alert-warning\" role=\"alert\">\n" +
+//                    "  That username is already in use, please select another.</div>");
+//            model.addAttribute("user", user);
+//            return "users/sign-up";
+//        }
         userDao.save(user);
         return "redirect:/login";
     }
@@ -39,12 +47,16 @@ public class UserController {
     public String profileEditRender(@PathVariable String username, Model model) {
         User loggedin = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", userDao.findByUsername(loggedin.getUsername()));
-        return "users/edit";
+        return "users/sign-up";
     }
 
     @PostMapping("profile/{username}/edit")
     public String profileEditSave(@ModelAttribute User user, @PathVariable String username, Model model) {
+        User loggedin = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String hash = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hash);
+        user.setId(loggedin.getId());
         userDao.save(user);
-        return "redirect:/user/" + user.getUsername();
+        return "redirect:/profile/" + user.getUsername();
     }
 }
