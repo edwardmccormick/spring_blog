@@ -1,5 +1,6 @@
 package com.codeup.springboot_blog.controllers;
 
+import com.codeup.springboot_blog.daos.CommentRepository;
 import com.codeup.springboot_blog.daos.UserRepository;
 import com.codeup.springboot_blog.models.User;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
     private UserRepository userDao;
     private PasswordEncoder passwordEncoder;
+    private CommentRepository commentDao;
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, CommentRepository commentDao) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.commentDao = commentDao;
     }
 
     @GetMapping("/sign-up")

@@ -40,6 +40,24 @@
         </div>
     </div>
    </div>
+    <div th:each="comment,iterStat : ${post.getComments()}" th:class="${iterStat.count}">
+        <div class="card">
+            <div class="card-body">
+                <img th:src="${comment.author.getAvatar_path()}" height="30px" width="30px"><span th:text="${comment.author.username}"></span> <span th:text="${comment.comment}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <form th:action="@{'/posts/'+ ${post.id}+'/comment'}" th:method="post" th:object="${newComment}">
+                <div class="input-group mb-3">
+<!--                <input class="form-control" th:field="*{getComment()}" type="text">-->
+                    <input class="form-control" name="comment" type="text">
+                    <button class="btn" type="submit">Submit</button></div>
+
+            </form>
+        </div>
+    </div>
 </div>
 
     <footer th:replace="partials.html::footer"></footer>

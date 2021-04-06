@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -19,6 +20,12 @@ public class Post {
     @Column (columnDefinition = "TEXT", nullable = false)
     private String body;
 
+    @OneToOne
+    private User author;
+
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "post")
+    private List<Comment> comments;
+
     public User getAuthor() {
         return author;
     }
@@ -27,9 +34,9 @@ public class Post {
         this.author = author;
     }
 
-    @ManyToOne
-    @JoinColumn (name = "author_id")
-    private User author;
+
+
+
 
 //    @Column (columnDefinition="created_time datetime default CURRENT_TIMESTAMP null")
 //    @Column
@@ -64,7 +71,17 @@ public class Post {
         this.body = body;
     }
 
-//    public Post(long id, String title, String body, Date created_on, Date modified_on) {
+    public Post(long id, String title, String body, User author, List<Comment> comments, Date created_on, Date modified_on) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.author = author;
+        this.comments = comments;
+        this.created_on = created_on;
+        this.modified_on = modified_on;
+    }
+
+    //    public Post(long id, String title, String body, Date created_on, Date modified_on) {
 //        this.id = id;
 //        this.title = title;
 //        this.body = body;
@@ -74,6 +91,14 @@ public class Post {
 ////        this.modified_on_string = sdf.format(modified_on);
 //    }
 
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public long getId() {
         return id;

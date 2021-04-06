@@ -24,8 +24,11 @@ public class User {
     @Column
     private String avatar_path;
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "author")
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "id")
     private List<Post> posts;
+
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "comment_id")
+    private List<Comment> comments;
 
     public User(User copy) {
         id = copy.id;
@@ -60,6 +63,25 @@ public class User {
         this.bio = bio;
         this.avatar_path = avatar_path;
         this.posts = posts;
+    }
+
+    public User(long id, String username, String email, String password, String bio, String avatar_path, List<Post> posts, List<Comment> comments) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.bio = bio;
+        this.avatar_path = avatar_path;
+        this.posts = posts;
+        this.comments = comments;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public long getId() {
