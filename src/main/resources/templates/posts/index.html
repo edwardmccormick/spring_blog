@@ -43,6 +43,7 @@
     <a th:href="@{/posts/__${post.id}__}"><h2><span th:text="${post.title}"></span> - Post #<span th:text="${post.id}"></span> </h2></a>
     <div class="text-start"><p th:text="${post.getBody()}"></p>
         <p>Posted by: <span th:text="${post.author.username}"></span></p>
+        <p>There are <span th:text="${post.getComments().size()}"></span> comments.</p>
 <!--        <p>Posted: <span th:text="${post.created_on_string}"> </span> </div>-->
 </div>
 </div>

@@ -1,6 +1,8 @@
 package com.codeup.springboot_blog.controllers;
 
+import com.codeup.springboot_blog.daos.CommentRepository;
 import com.codeup.springboot_blog.daos.UserRepository;
+import com.codeup.springboot_blog.models.Comment;
 import com.codeup.springboot_blog.models.Post;
 import com.codeup.springboot_blog.daos.PostRepository;
 import com.codeup.springboot_blog.models.User;
@@ -18,13 +20,15 @@ public class PostController {
     private final PostRepository postDao;
     private final UserRepository userDao;
     private final EmailService emailService;
+    private final CommentRepository commentDao;
 
 
-    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService){
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService, CommentRepository commentDao){
 
         this.postDao = postDao;
         this.userDao = userDao;
         this.emailService = emailService;
+        this.commentDao = commentDao;
     }
 
 @GetMapping("/posts")
@@ -52,6 +56,11 @@ public class PostController {
     if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {User loggedin = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     if (loggedin.getId() == post.getAuthor().getId()) {
         model.addAttribute("owner", true);
+        Comment newComment = new Comment();
+        newComment.setAuthor(loggedin);
+        newComment.setPost(post);
+        newComment.setComment("Type a comment to join the conversation.");
+        model.addAttribute("newComment", newComment);
     }}
 
     return "posts/show";
