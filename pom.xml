@@ -15,6 +15,7 @@
     <description>Demo project for Spring Boot - it&apos;s a blog</description>
     <properties>
         <java.version>11</java.version>
+        <skipTests>True</skipTests>
     </properties>
     <dependencies>
         <dependency>
