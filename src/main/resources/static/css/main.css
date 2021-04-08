@@ -41,3 +41,13 @@ body {
     background-color: var(--quicksilver);
     border-color: var(--taupe);
 }
+
+#logoutmenu {
+    background-color: var(--white);
+    color: var(--cadetblue);
+}
+
+#logoutmenu:hover, #logoutmenu:active, #logoutmenu:focus {
+    background-color: var(--cadetblue);
+    color: var(--white)
+}
