@@ -12,11 +12,11 @@ public class Comment {
     private String comment;
 
     @ManyToOne
-    @JoinColumn (name = "author_id")
+    @JoinColumn (name = "author_id", referencedColumnName = "id", nullable = false)
     private User author;
 
     @ManyToOne
-    @JoinColumn (name = "post_id")
+    @JoinColumn (name = "post_id", referencedColumnName = "id", nullable = false)
     private Post post;
 
     public Comment() {};
