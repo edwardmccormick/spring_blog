@@ -32,19 +32,25 @@ public class CommentController {
     @PostMapping("/posts/{id}/comment")
 //    public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
 //                                         @RequestParam(name = "body") String body, Model model) {
-    public String editSaveComment(@ModelAttribute Comment comment, @PathVariable long id, Model model) {
-        if (comment.getComment() == null) {
-            return "redirect:/posts/" + id;
-        }
-        else {
-
+    public String editSaveComment(@ModelAttribute String newComment, @PathVariable long id, Model model) {
+//        if (newComment == null) {
+//            return "redirect:/posts/" + id;
+//        }
+//        else {
+            System.out.println("At least it started the comment process");
+            Comment addComment = new Comment();
+            System.out.println("newComment = " + newComment);
+            addComment.setComment(newComment);
         User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        comment.setAuthor(author);
-        comment.setPost(postDao.getOne(id));
-        commentDao.save(comment);
+        addComment.setAuthor(author);
+            System.out.println("author.getUsername() = " + author.getUsername());
+            addComment.setPost(postDao.getOne(id));
+            System.out.println("postDao.getOne(id).getTitle() = " + postDao.getOne(id).getTitle());
+            commentDao.save(addComment);
 //        model.addAttribute("alert", "<div class=\"alert alert-success\" role=\"alert\">\n" +
 //                "  The post was successfully updated. </div>");
         return "redirect:/posts/" + id;
-    }}
+    }
+//}
 
 }
