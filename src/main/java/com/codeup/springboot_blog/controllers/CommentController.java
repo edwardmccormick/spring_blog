@@ -32,15 +32,15 @@ public class CommentController {
     @PostMapping("/posts/{id}/comment")
 //    public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
 //                                         @RequestParam(name = "body") String body, Model model) {
-    public String editSaveComment(@ModelAttribute String newComment, @PathVariable long id, Model model) {
+    public String editSaveComment(@ModelAttribute String comment, @PathVariable long id, Model model) {
 //        if (newComment == null) {
 //            return "redirect:/posts/" + id;
 //        }
 //        else {
             System.out.println("At least it started the comment process");
             Comment addComment = new Comment();
-            System.out.println("newComment = " + newComment);
-            addComment.setComment(newComment);
+            System.out.println("comment = " + comment);
+            addComment.setComment(comment);
         User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         addComment.setAuthor(author);
             System.out.println("author.getUsername() = " + author.getUsername());

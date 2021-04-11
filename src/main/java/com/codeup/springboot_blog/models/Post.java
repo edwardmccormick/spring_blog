@@ -20,7 +20,8 @@ public class Post {
     @Column (columnDefinition = "TEXT", nullable = false)
     private String body;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn (name = "author_id", referencedColumnName = "id", nullable = false)
     private User author;
 
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "post")
