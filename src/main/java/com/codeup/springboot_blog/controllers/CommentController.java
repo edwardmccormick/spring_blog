@@ -10,10 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class CommentController {
@@ -32,7 +29,8 @@ public class CommentController {
     @PostMapping("/posts/{id}/comment")
 //    public String editSaveIndividualPost(@RequestParam(name = "id") long id, @RequestParam(name = "title") String title,
 //                                         @RequestParam(name = "body") String body, Model model) {
-    public String editSaveComment(@ModelAttribute String comment, @PathVariable long id, Model model) {
+    public String editSaveComment(@RequestParam("comment") String comment, @PathVariable long id, Model model) {
+//    public String editSaveComment(@ModelAttribute Comment comment, @PathVariable long id, Model model) {
 //        if (newComment == null) {
 //            return "redirect:/posts/" + id;
 //        }
@@ -40,6 +38,7 @@ public class CommentController {
             System.out.println("At least it started the comment process");
             Comment addComment = new Comment();
             System.out.println("comment = " + comment);
+//            Comment addComment = comment;
             addComment.setComment(comment);
         User author = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         addComment.setAuthor(author);
