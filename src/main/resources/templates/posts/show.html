@@ -49,10 +49,10 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <form th:action="@{'/posts/'+ ${post.id}+'/comment'}" th:method="post" th:object="${newComment}">
+            <form th:action="@{'/posts/'+ ${post.id}+'/comment'}" method="post">
                 <div class="input-group mb-3">
-<!--                <input class="form-control" th:field="*{comment}" type="text">-->
-                    <input class="form-control" name="newComment" type="text">
+                <input class="form-control" name="comment" id="comment" type="text">
+<!--                    <input class="form-control" name="newComment" type="text">-->
                     <button class="btn" type="submit">Submit</button></div>
 
             </form>
