@@ -56,11 +56,9 @@ public class PostController {
     if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {User loggedin = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     if (loggedin.getId() == post.getAuthor().getId()) {
         model.addAttribute("owner", true);
-        Comment newComment = new Comment();
-        newComment.setAuthor(loggedin);
-        newComment.setPost(post);
-        newComment.setComment("Type a comment to join the conversation.");
-        model.addAttribute("newComment", newComment);
+//        Comment comment = new Comment();
+//        comment.setComment("Type a comment to join the conversation.");
+//        model.addAttribute("comment", comment);
     }}
 
     return "posts/show";
