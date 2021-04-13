@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Comment {
+public class Comment implements Comparable<Comment>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long comment_id;
@@ -46,6 +46,10 @@ public class Comment {
         this.comment = comment;
         this.author = author;
         this.post = post;
+    }
+
+    public int compareTo(Comment comment) {
+        return ((int) (comment.getId() - this.comment_id));
     }
 
     public long getId() {
