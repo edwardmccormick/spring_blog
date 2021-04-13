@@ -45,12 +45,13 @@
             <div class="card-body">
                 <span th:text="${comment.author.username}"></span> on <span class="text-muted" th:text="${#dates.format(comment.createDate,'E, MMM dd yyyy HH:mm:ss')}"></span><br>
                 <img th:src="${comment.author.getAvatar_path()}" height="30px" width="30px"> <span th:text="${comment.comment}"></span>
+                <div th:if="${comment.author.id == loggedin.id}"><form action="/comments/delete" method="post"><input hidden name="id" th:value="${comment.id}"><button type="submit" class="btn btn-danger">Delete</button></form></div>
             </div>
         </div>
     </div>
     <div class="card">
         <div class="card-body">
-<!--            <form th:action="@{'/posts/'+ ${post.id}+'/comment'}" th:method="post" th:object="${comment}">-->
+<!--            <form th:action="@{'/posts/'+ ${post.id}+'/comment'}" th:method="post" th:object="${comment}"> I'm not sure why the form binding didn't work - but this solution did and was much easier-->
             <form th:action="@{'/posts/'+ ${post.id}+'/comment'}" method="post" >
             <div class="input-group mb-3">
                 <input class="form-control" name="comment" id="comment" type="text">
