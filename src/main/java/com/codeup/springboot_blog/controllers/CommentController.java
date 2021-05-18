@@ -53,7 +53,7 @@ public class CommentController {
 //}
 
     @PostMapping("/posts/{id}/comment/delete")
-    public String deleteComment(@RequestParam("comment_id") long comment_id, @PathVariable long post_id, Model model) {
+    public String deleteComment(@RequestParam("id") long comment_id, @PathVariable long post_id, Model model) {
         commentDao.deleteById(comment_id);
         return "redirect:/posts/" + post_id;
     }
