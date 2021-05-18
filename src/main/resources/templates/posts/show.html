@@ -45,8 +45,8 @@
             <div class="card-body">
                 <span th:text="${comment.author.username}"></span> on <span class="text-muted" th:text="${#dates.format(comment.createDate,'E, MMM dd yyyy HH:mm:ss')}"></span><br>
                 <img th:src="${comment.author.getAvatar_path()}" height="30px" width="30px"> <span th:text="${comment.comment}"></span>
-                <div th:if="${comment.author.id == loggedin.id}"><form action="/comments/delete" method="post"><input hidden name="id" th:value="${comment.id}"><button type="submit" class="btn btn-danger">Delete</button></form></div>
-            </div>
+                <div th:if="${loggedin != null}"><div th:if="${comment.author.id == loggedin.id}"><form th:action="@{'/posts/'+ ${post.id}+'/comment/delete'}" method="post"><input hidden name="comment_id" th:value="${comment.id}"><button type="submit" class="btn btn-danger">Delete</button></form></div>
+            </div></div>
         </div>
     </div>
     <div class="card">
