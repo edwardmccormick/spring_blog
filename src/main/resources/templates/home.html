@@ -7,6 +7,8 @@
 </head>
 <body>
 <nav th:replace="partials.html :: navbar"></nav>
+
+<div class="container">
 <h1>Hi there, my name is Ted.</h1>
 
 <h4>I turn coffee and breakfast tacos into beautiful, interactive, responsive websites.</h4>
@@ -14,6 +16,32 @@
     and a diverse technical background transitioning into software development.
     I’m passionate about implementing technically-challenging, value-added projects
     while continuing to add new skills and grow mastery with my current skill set.</p>
+
+    <div class="row">
+        <div id='usnagrad' class="col-lg-4 text-center">
+            <img class="rounded" src="img/AnnapolisGraduationcropped.jpg" role="img" aria-label="Placeholder: 140x140" height="400px" preserveAspectRatio="xMidYMid slice" focusable="false" id="firstcircle" data-toggle="tooltip" data-placement="top" title="Unfortunately, none of these people are me. I was too busy celebrating to take a picture.">
+
+            <h2 class="">Annapolis Graduate</h2>
+            <p class="text-justify mx-2">With a Bachelor's of Science in Political Science, I'm well-rounded enough to be technical, to communicate, or mix and match as you see fit.</p>
+
+        </div><!-- /.col-lg-4 -->
+        <div id="swo" class="col-lg-4 text-center">
+            <img class="rounded" src="img/USS-Mahan.jpg" height="400px" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false" id="secondcircle" data-toggle="tooltip" data-placement="top" title="I'm actually in this picture! Behind 1/2 inch of steel plate, standing watch in the Combat Information Center.">
+
+            <h2 class="">Experienced Leader</h2>
+            <p class="text-justify mx-2">I've been, literally, in the trenches. And the Engine Rooms. And Bridge. I'm ready to lead, and follow, on day one.</p>
+
+        </div>
+        <div id="codeup" class="col-lg-4 text-center">
+            <img class="rounded" height="400" src="img/codeup_cropped.jpg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false" id="thirdcircle" data-toggle="tooltip" data-placement="top" title="Confession - I've been into Codeup's San Antonio campus one time - to interview. But a picture of a Zoom call is less interesting.">
+
+            <h2>Budding Developer</h2>
+            <p class="text-justify mx-2">Codeup delivers developers with the foundational skills to be successful and a focus on industry-requested technical skills.</p>
+            <!--                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
+        </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+</div>
 <footer th:replace="partials.html::footer"></footer>
 </body>
 </html>
